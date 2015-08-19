@@ -18,7 +18,7 @@ abstract class BundleWithPlugins extends Bundle
     /**
      * @var BundlePlugin[]
      */
-    private $registeredPlugins = array();
+    protected $registeredPlugins = array();
 
     abstract protected function getAlias();
 
@@ -36,7 +36,7 @@ abstract class BundleWithPlugins extends Bundle
     /**
      * @inheritdoc
      */
-    final public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container)
     {
         foreach ($this->registeredPlugins as $plugin) {
             $plugin->build($container);
@@ -66,7 +66,7 @@ abstract class BundleWithPlugins extends Bundle
     /**
      * @inheritdoc
      */
-    final public function getContainerExtension()
+    public function getContainerExtension()
     {
         return new ExtensionWithPlugins($this->getAlias(), $this->registeredPlugins);
     }
